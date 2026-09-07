@@ -1,0 +1,10 @@
+{
+    "ros_workspace": "dobot_ws",
+    "cmake.ignoreCMakeListsMissing": true,
+    "python.autoComplete.extraPaths": [
+        "./ros_ws/install/**/lib/python3.*/site-packages",
+    ],
+    "python.analysis.extraPaths": [
+        "./ros_ws/install/**/lib/python3.*/site-packages",
+    ],
+}
