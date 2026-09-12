@@ -294,4 +294,5 @@ AMENT_IGNORE
 .history
 .ionide
 
+/reference
 # End of https://www.toptal.com/developers/gitignore/api/ros,ros2,visualstudiocode,c++,python
