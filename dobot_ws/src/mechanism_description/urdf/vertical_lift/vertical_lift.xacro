@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:include
+        filename="$(find mechanism_description)/urdf/vertical_lift/vertical_lift_macros.xacro" />
+    <xacro:include
+        filename="$(find mechanism_description)/urdf/vertical_lift/vertical_lift_ros2_control.xacro" />
+
+    <xacro:property name="package_name" value="mechanism_description" />
+
+    <xacro:property name="lift_min" value="0.0" />
+    <xacro:property name="lift_max" value="0.45" />
+    <xacro:property name="lift_vel" value="0.2" />
+    <xacro:property name="lift_eff" value="5000" />
+
+
+    <xacro:macro name="vertical_lift" params="parent prefix *origin">
+
+        <!-- ================= BASE LINK & JOINT ================= -->
+        <xacro:lift_link name="lift_base" prefix="${prefix}" mass="84" ixx="3.13892207"
+            iyy="3.13892187" izz="1.07200081" visual_filename="slider_lift_base"
+            collision_filename="slider_lift_base">
+            <origin xyz="1.85000004 1.05000001 0.35500001" rpy="0 0 0" />
+        </xacro:lift_link>
+
+        <xacro:lift_joint name="lift_base" prefix="${prefix}" type="fixed" parent="${parent}">
+            <xacro:insert_block name="origin" />
+        </xacro:lift_joint>
+
+        <!-- ================= MID LINK & JOINT ================= -->
+        <xacro:lift_link name="lift_mid" prefix="${prefix}" mass="84" ixx="2.27709013"
+            iyy="2.27709005" izz="0.507751779" visual_filename="slider_lift_mid"
+            collision_filename="slider_lift_mid">
+            <origin xyz="1.84999997 1.05000001 0.35500001" rpy="0 0 0" />
+        </xacro:lift_link>
+
+        <xacro:lift_joint name="lift_mid" prefix="${prefix}" type="prismatic"
+            parent="${prefix}lift_base_link" lower="${lift_min}" upper="${lift_max}"
+            effort="${lift_eff}" velocity="${lift_vel}" axis_xyz="0 0 1">
+            <origin xyz="0 0 0 " rpy="0 0 0" />
+        </xacro:lift_joint>
+
+        <!-- ================= TOP LINK & JOINT ================= -->
+        <xacro:lift_link name="lift_top" prefix="${prefix}" mass="84" ixx="2.71250789"
+            iyy="2.71250797" izz="0.234331075" visual_filename="slider_lift_top"
+            collision_filename="slider_lift_top">
+            <origin xyz="1.85000002 1.04999999 0.35500001" rpy="0 0 0" />
+        </xacro:lift_link>
+
+        <xacro:lift_joint name="lift_top" prefix="${prefix}" type="prismatic"
+            parent="${prefix}lift_mid_link" lower="${lift_min}" upper="${lift_max}"
+            effort="${lift_eff}" velocity="${lift_vel}" axis_xyz="0 0 1">
+            <origin xyz="0 0 0 " rpy="0 0 0" />
+        </xacro:lift_joint>
+
+        <!-- ================= TOP PLATE & JOINT ================= -->
+        <xacro:lift_link name="lift_plate" prefix="${prefix}" mass="61" ixx="1.76610152"
+            iyy="2.74538723" izz="4.08460247" visual_filename="slider_lift_plate"
+            collision_filename="slider_lift_plate">
+            <origin xyz="1.85000002 1.04877745 0.76211913" rpy="0 0 0" />
+        </xacro:lift_link>
+
+        <xacro:lift_joint name="lift_plate" prefix="${prefix}" type="fixed"
+            parent="${prefix}lift_top_link">
+            <origin xyz="0 0 0 " rpy="0 0 0" />
+        </xacro:lift_joint>
+
+        <xacro:vertical_lift_ros2_control name="GazeboSimSystem" lower="${lift_min}"
+            upper="${lift_max}" />
+
+    </xacro:macro>
+</robot>
