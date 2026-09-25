@@ -4,7 +4,7 @@ from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
 from launch_ros.substitutions import FindPackageShare
 
-PKG_NAME = 'mechanism_description'
+PKG_NAME = 'slider_description'
 
 
 def generate_launch_description() -> LaunchDescription:
@@ -13,7 +13,7 @@ def generate_launch_description() -> LaunchDescription:
     xacro_file = PathJoinSubstitution([
         pkg_share,
         'urdf',
-        'vertical_lift.urdf.xacro'
+        'slider.urdf.xacro'
     ])
 
     rviz_config = PathJoinSubstitution([

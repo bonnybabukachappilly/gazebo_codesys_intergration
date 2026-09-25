@@ -1,0 +1,50 @@
+/**:
+  controller_manager:
+    ros__parameters:
+      update_rate: 1000  # Hz
+
+      joint_state_broadcaster:
+        type: joint_state_broadcaster/JointStateBroadcaster
+
+      p1_carrier_controller:
+        type: joint_trajectory_controller/JointTrajectoryController
+
+      right_lift_controller:
+        type: joint_trajectory_controller/JointTrajectoryController
+
+      left_lift_controller:
+        type: joint_trajectory_controller/JointTrajectoryController
+
+  p1_carrier_controller:
+    ros__parameters:
+      joints:
+        - p1_carrier_x_joint
+        - p1_carrier_y_joint
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+        - velocity
+
+
+  right_lift_controller:
+    ros__parameters:
+      joints:
+        - right_lift_mid_joint
+        - right_lift_top_joint
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+        - velocity
+
+  left_lift_controller:
+    ros__parameters:
+      joints:
+        - left_lift_mid_joint
+        - left_lift_top_joint
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+        - velocity

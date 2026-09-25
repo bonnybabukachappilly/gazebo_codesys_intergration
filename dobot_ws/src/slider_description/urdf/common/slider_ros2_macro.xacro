@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
     <xacro:macro name="prismatic_joint_interface" params="joint_name lower upper initial:=0.0002">
         <joint name="${joint_name}">
             <command_interface name="position">
@@ -14,15 +15,22 @@
         </joint>
     </xacro:macro>
 
-    <xacro:macro name="vertical_lift_ros2_control" params="name lower upper">
+    <xacro:macro name="passive_joint_interface" params="joint_name initial:=0.0002">
+        <joint name="${joint_name}">
+            <state_interface name="position">
+                <param name="initial_value">${initial}</param>
+            </state_interface>
+            <state_interface name="velocity" />
+        </joint>
+    </xacro:macro>
+
+    <xacro:macro name="ros2_control_system" params="name **joint_interfaces">
         <ros2_control name="${name}" type="system">
             <hardware>
                 <plugin>gz_ros2_control/GazeboSimSystem</plugin>
             </hardware>
-            <xacro:prismatic_joint_interface joint_name="lift_mid_joint" lower="${lower}"
-                upper="${upper}" />
-            <xacro:prismatic_joint_interface joint_name="lift_top_joint" lower="${lower}"
-                upper="${upper}" />
+
+            <xacro:insert_block name="joint_interfaces" />
         </ros2_control>
     </xacro:macro>
 

@@ -5,8 +5,8 @@ from pathlib import Path
 
 import trimesh
 
-filename = 'slider_lift_plate.stl'
-extras = 'vertical_lift/collision'
+filename = 'conveyor_plate.stl'
+extras = 'sliding_plate/collision'
 package_name = 'mechanism_description'
 
 ws_dir = 'dobot_ws'

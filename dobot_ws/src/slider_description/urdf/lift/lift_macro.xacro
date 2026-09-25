@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find slider_description)/urdf/common/slider_macro.xacro" />
+
+    <xacro:property name="module" value="lift" />
+
+
+    <xacro:macro name="vertical_lifts" params="prefix parent lower upper effort velocity *origin">
+        <!-- ============================= BASE ============================= -->
+        <xacro:static_slider prefix="${prefix}" name="lift_base" mass="84"
+            parent="${parent}" vis_file="slider_lift_base"
+            col_file="slider_lift_base" module="${module}"
+            ixx="3.13892207" iyy="3.13892187" izz="1.07200081"
+            inertia_origin="1.85000004 1.05000001 0.35500001">
+            <xacro:insert_block name="origin" />
+        </xacro:static_slider>
+
+        <!-- ============================== MID ============================== -->
+        <xacro:prismatic_slider prefix="${prefix}" name="lift_mid" mass="84"
+            parent="${prefix}lift_base_link" lower="${lower}" upper="${upper}"
+            effort="${effort}" velocity="${velocity}" module="${module}"
+            ixx="2.27709013" iyy="2.27709005" izz="0.507751779"
+            vis_file="slider_lift_mid" col_file="slider_lift_mid"
+            axis_xyz="0 0 1" inertia_origin="1.84999997 1.05000001 0.35500001">
+            <origin xyz="0 0 0 " rpy="0 0 0" />
+        </xacro:prismatic_slider>
+
+        <!-- =============================== TOP =============================== -->
+        <xacro:prismatic_slider prefix="${prefix}" name="lift_top" mass="84"
+            parent="${prefix}lift_mid_link" lower="${lower}" upper="${upper}"
+            effort="${effort}" velocity="${velocity}" module="${module}"
+            ixx="2.71250789" iyy="2.71250797" izz="0.234331075"
+            vis_file="slider_lift_top" col_file="slider_lift_top"
+            axis_xyz="0 0 1" inertia_origin="1.85000002 1.04999999 0.35500001">
+            <origin xyz="0 0 0 " rpy="0 0 0" />
+        </xacro:prismatic_slider>
+
+        <!-- ============================== PLATE ============================== -->
+        <xacro:static_slider prefix="${prefix}" name="lift_plate" mass="61"
+            parent="${prefix}lift_top_link" vis_file="slider_lift_plate"
+            col_file="slider_lift_plate" module="${module}"
+            ixx="1.76610152" iyy="2.74538723" izz="4.08460247"
+            inertia_origin="1.85000002 1.04877745 0.76211913">
+            <origin xyz="0 0 0 " rpy="0 0 0" />
+        </xacro:static_slider>
+
+    </xacro:macro>
+
+</robot>

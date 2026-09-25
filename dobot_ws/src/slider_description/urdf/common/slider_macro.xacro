@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:macro name="slider_macro"
+        params="prefix name mass type parent lower:=0.0 upper:=0.0 effort:=0.0 velocity:=0.0 ixx:=0.001 iyy:=0.001 izz:=0.001 vis_file:='' col_file:='' module:='' axis_xyz:='' damping:=0.001 friction:=0.001 inertia_origin:='' *origin">
+
+        <link name="${prefix}${name}_link">
+            <inertial>
+                <xacro:if value="${inertia_origin != ''}">
+                    <origin xyz="${inertia_origin}" rpy="0 0 0" />
+                </xacro:if>
+
+                <xacro:unless value="${inertia_origin != ''}">
+                    <origin xyz="0 0 0" rpy="0 0 0" />
+                </xacro:unless>
+
+                <mass value="${mass}" />
+                <inertia ixx="${ixx}" ixy="0" ixz="0" iyy="${iyy}" iyz="0" izz="${izz}" />
+            </inertial>
+
+            <xacro:if value="${vis_file != '' and col_file != '' and module != ''}">
+                <visual>
+                    <geometry>
+                        <mesh
+                            filename="package://slider_description/meshes/${module}/visual/${vis_file}.obj" />
+                    </geometry>
+                </visual>
+
+                <collision>
+                    <geometry>
+                        <mesh
+                            filename="package://slider_description/meshes/${module}/collision/${col_file}.stl" />
+                    </geometry>
+                </collision>
+            </xacro:if>
+        </link>
+
+        <gazebo reference="${prefix}${name}_link">
+            <gravity>true</gravity>
+            <selfCollide>true</selfCollide>
+        </gazebo>
+
+        <joint name="${prefix}${name}_joint" type="${type}">
+            <parent link="${parent}" />
+            <child link="${prefix}${name}_link" />
+
+            <xacro:insert_block name="origin" />
+
+            <xacro:unless value="${type == 'fixed'}">
+                <axis xyz="${axis_xyz}" />
+                <limit lower="${lower}" upper="${upper}" effort="${effort}" velocity="${velocity}" />
+
+                <dynamics damping="${damping}" friction="${friction}" />
+                <!-- <xacro:if value="${damping != '' and friction != ''}"> -->
+                <!-- </xacro:if> -->
+            </xacro:unless>
+
+        </joint>
+    </xacro:macro>
+
+
+    <xacro:macro name="null_prismatic_slider"
+        params="prefix name parent lower upper effort velocity axis_xyz mass:=0.5 *origin">
+        <xacro:slider_macro prefix="${prefix}" name="${name}" mass="${mass}"
+            type="prismatic" parent="${parent}" lower="${lower}"
+            upper="${upper}" effort="${effort}" velocity="${velocity}"
+            axis_xyz="${axis_xyz}" damping="0.0" friction="0.0">
+            <xacro:insert_block name="origin" />
+        </xacro:slider_macro>
+    </xacro:macro>
+
+    <xacro:macro name="static_slider"
+        params="prefix name mass parent vis_file col_file module ixx:=0.001 iyy:=0.001 izz:=0.001 inertia_origin='' *origin">
+        <xacro:slider_macro prefix="${prefix}" name="${name}" mass="${mass}"
+            type="fixed" parent="${parent}"
+            vis_file="${vis_file}" col_file="${col_file}" module="${module}"
+            ixx="${ixx}" iyy="${iyy}" izz="${izz}" inertia_origin="${inertia_origin}">
+            <xacro:insert_block name="origin" />
+        </xacro:slider_macro>
+    </xacro:macro>
+
+    <xacro:macro name="prismatic_slider"
+        params="prefix name mass parent lower upper effort velocity ixx iyy izz vis_file col_file module axis_xyz inertia_origin='' *origin">
+        <xacro:slider_macro prefix="${prefix}" name="${name}" mass="${mass}"
+            type="prismatic" parent="${parent}" lower="${lower}" upper="${upper}"
+            effort="${effort}" velocity="${velocity}"
+            ixx="${ixx}" iyy="${iyy}" izz="${izz}" inertia_origin="${inertia_origin}"
+            vis_file="${vis_file}" col_file="${col_file}" module="${module}"
+            axis_xyz="${axis_xyz}" damping="0.0" friction="0.0">
+            <xacro:insert_block name="origin" />
+        </xacro:slider_macro>
+    </xacro:macro>
+
+</robot>

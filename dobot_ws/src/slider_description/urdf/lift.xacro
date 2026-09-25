@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<robot name="slider_lift_system" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find slider_description)/urdf/lift/lift_macro.xacro" />
+    <xacro:include filename="$(find slider_description)/urdf/lift/lift_ros2_control.xacro" />
+
+    <xacro:arg name="controller_yaml" default="" />
+    <xacro:arg name="name_space" default="" />
+
+    <xacro:property name="lower" value="0.0" />
+    <xacro:property name="upper" value="0.65" />
+    <xacro:property name="effort" value="0.2" />
+    <xacro:property name="velocity" value="7000" />
+
+    <!-- Plate 1 -->
+    <!-- Joint mid: left_lift_mid_joint [position/position, velocity, effort] -->
+    <!-- Joint top: left_lift_top_joint [position/position, velocity, effort] -->
+    <xacro:vertical_lifts prefix="left_" parent="world" lower="${lower}"
+        upper="${upper}" effort="${effort}" velocity="${velocity}">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+    </xacro:vertical_lifts>
+
+    <xacro:vertical_lifts prefix="right_" parent="world" lower="${lower}"
+        upper="${upper}" effort="${effort}" velocity="${velocity}">
+        <origin xyz="6.575 1.075 0" rpy="0 0 ${pi/2}" />
+    </xacro:vertical_lifts>
+
+
+    <xacro:lift_ros2_controller prefix="left_" lower_mid="${lower}"
+        upper_mid="${upper}" lower_top="${lower}" upper_top="${upper}" />
+
+    <xacro:lift_ros2_controller prefix="right_" lower_mid="${lower}"
+        upper_mid="${upper}" lower_top="${lower}" upper_top="${upper}" />
+
+</robot>

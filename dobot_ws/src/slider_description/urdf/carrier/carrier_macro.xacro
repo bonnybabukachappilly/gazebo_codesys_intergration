@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find slider_description)/urdf/common/slider_macro.xacro" />
+
+    <xacro:property name="module" value="carrier" />
+
+
+    <xacro:macro name="carrier_plates" params="prefix parent velocity effort lower_x upper_x lower_y upper_y lower_z upper_z *origin">
+        <xacro:null_prismatic_slider prefix="${prefix}" name="carrier_x"
+            parent="${parent}" lower="${lower_x}" upper="${upper_x}"
+            effort="${effort}" velocity="${velocity}" axis_xyz="1 0 0">
+            <xacro:insert_block name="origin" />
+        </xacro:null_prismatic_slider>
+
+        <xacro:null_prismatic_slider prefix="${prefix}" name="carrier_y"
+            parent="${prefix}carrier_x_link"
+            lower="${lower_y}" upper="${upper_y}" effort="${effort}"
+            velocity="${velocity}" axis_xyz="0 1 0">
+            <xacro:insert_block name="origin" />
+        </xacro:null_prismatic_slider>
+
+        <xacro:prismatic_slider prefix="${prefix}" name="carrier_z"
+            mass="1.2" parent="${prefix}carrier_y_link"
+            lower="${lower_z}" upper="${upper_z}" effort="${effort}"
+            velocity="${velocity}" ixx="0.0150472272" iyy="0.0150472456"
+            izz="0.0300746999" vis_file="conveyor_plate" col_file="conveyor_plate"
+            module="${module}" axis_xyz="0 0 1">
+            <xacro:insert_block name="origin" />
+        </xacro:prismatic_slider>
+    </xacro:macro>
+
+    <xacro:macro name="slider_carrier"
+        params="parent origin_bottom origin_top plate_z lower_x upper_x lower_y upper_y lower_z upper_z velocity effort">
+        <xacro:static_slider prefix="" name="slider_bottom"
+            mass="5" parent="${parent}" vis_file="slider_bottom"
+            col_file="slider_bottom" module="${module}">
+            <origin xyz="${origin_bottom}" rpy="0 0 0" />
+        </xacro:static_slider>
+
+        <xacro:static_slider prefix="" name="slider_top"
+            mass="5" parent="${parent}" vis_file="slider_top"
+            col_file="slider_top" module="${module}">
+            <origin xyz="${origin_top}" rpy="0 0 0" />
+        </xacro:static_slider>
+    </xacro:macro>
+
+</robot>

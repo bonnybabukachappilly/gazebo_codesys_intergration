@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<robot name="slider_lift_system" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <link name="world" />
+
+    <xacro:include filename="$(find slider_description)/urdf/lift.xacro" />
+    <xacro:include filename="$(find slider_description)/urdf/carrier.xacro" />
+
+    <xacro:arg name="name_space" default="" />
+    <xacro:arg name="controller_yaml" default="" />
+
+    <gazebo>
+        <self_collide>true</self_collide>
+        <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+            <ros>
+                <namespace>$(arg name_space)</namespace>
+            </ros>
+            <parameters>$(arg controller_yaml)</parameters>
+        </plugin>
+    </gazebo>
+</robot>

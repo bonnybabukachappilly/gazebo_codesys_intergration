@@ -102,10 +102,10 @@
         // * ----------------------------- ROS LAUNCH TASKS ----------------------------
         // * ---------------------------------------------------------------------------
         {
-            "label": "Launch: cr5_pgc_50_35_moveit_config:gazebo_moveit.launch.py",
+            "label": "Launch: slider_description::display_carrier",
             "type": "shell",
             "linux": {
-                "command": "unset GTK_PATH && source ./install/setup.bash && ros2 launch cr5_pgc_50_35_moveit_config gazebo_moveit.launch.py"
+                "command": "unset GTK_PATH && source ./install/setup.bash && ros2 launch slider_description display_carrier.launch.py"
             },
             "options": {
                 "cwd": "${workspaceFolder}/${config:ros_workspace}/"
@@ -113,10 +113,10 @@
             "problemMatcher": []
         },
         {
-            "label": "Launch: mechanism_description:conveyor_display.launch.py",
+            "label": "Launch: slider_description::display_lift",
             "type": "shell",
             "linux": {
-                "command": "unset GTK_PATH && source ./install/setup.bash && ros2 launch mechanism_description conveyor_display.launch.py"
+                "command": "unset GTK_PATH && source ./install/setup.bash && ros2 launch slider_description display_lift.launch.py"
             },
             "options": {
                 "cwd": "${workspaceFolder}/${config:ros_workspace}/"
@@ -124,10 +124,10 @@
             "problemMatcher": []
         },
         {
-            "label": "Launch: mechanism_description:controllers.launch.py",
+            "label": "Launch: slider_description::Slider Display",
             "type": "shell",
             "linux": {
-                "command": "unset GTK_PATH && source ./install/setup.bash && ros2 launch mechanism_description controllers.launch.py"
+                "command": "unset GTK_PATH && source ./install/setup.bash && ros2 launch slider_description display.launch.py"
             },
             "options": {
                 "cwd": "${workspaceFolder}/${config:ros_workspace}/"
@@ -135,21 +135,10 @@
             "problemMatcher": []
         },
         {
-            "label": "Launch: mechanism_description:gazebo.launch.py",
+            "label": "Launch: slider_description::Slider Simmulation",
             "type": "shell",
             "linux": {
-                "command": "unset GTK_PATH && source ./install/setup.bash && ros2 launch mechanism_description gazebo.launch.py"
-            },
-            "options": {
-                "cwd": "${workspaceFolder}/${config:ros_workspace}/"
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "Launch: pick_and_place:pick_and_place.launch.py",
-            "type": "shell",
-            "linux": {
-                "command": "unset GTK_PATH && source ./install/setup.bash && ros2 launch pick_and_place pick_and_place.launch.py"
+                "command": "unset GTK_PATH && source ./install/setup.bash && ros2 launch slider_description slider_gazebo.launch.py"
             },
             "options": {
                 "cwd": "${workspaceFolder}/${config:ros_workspace}/"

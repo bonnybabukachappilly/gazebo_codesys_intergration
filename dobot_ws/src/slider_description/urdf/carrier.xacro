@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<robot name="slider_carrier_system" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find slider_description)/urdf/carrier/carrier_macro.xacro" />
+    <xacro:include filename="$(find slider_description)/urdf/carrier/carrier_ros2_control.xacro" />
+
+    <xacro:arg name="controller_yaml" default="" />
+    <xacro:arg name="name_space" default="" />
+
+    <xacro:property name="lower_x" value="0.0" />
+    <xacro:property name="upper_x" value="3.7" />
+
+    <xacro:property name="lower_y" value="-1.85" />
+    <xacro:property name="upper_y" value="0.001" />
+
+    <xacro:property name="lower_z" value="0.0" />
+    <xacro:property name="upper_z" value="2.0" />
+
+    <xacro:property name="velocity" value="10" />
+    <xacro:property name="effort" value="5000" />
+
+    <xacro:slider_carrier parent="world"
+        origin_bottom="0 0 0" origin_top="0 0 1" plate_z="0"
+        lower_x="${lower_x}" upper_x="${upper_x}"
+        lower_y="${lower_y}" upper_y="${upper_y}"
+        lower_z="${lower_z}" upper_z="${upper_z}"
+        velocity="${velocity}" effort="${effort}" />
+
+    <!-- Plate 1 -->
+    <!-- Joint X: p1_carrier_x_joint [position/position, velocity, effort] -->
+    <!-- Joint Y: p1_carrier_y_joint [position/position, velocity, effort] -->
+    <!-- Joint Z: p1_carrier_z_joint [null/position, velocity, effort] -->
+    <xacro:carrier_plates prefix="p1_" parent="world" velocity="${velocity}"
+        effort="${effort}" lower_x="${lower_x}" upper_x="${upper_x}"
+        lower_y="${lower_y}" upper_y="${upper_y}" lower_z="${lower_z}" upper_z="${upper_z}">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+    </xacro:carrier_plates>
+
+    <xacro:carrier_ros2_controller prefix="p1_" lower_x="${lower_x}" upper_x="${upper_x}"
+        lower_y="${lower_y}" upper_y="${upper_y}" />
+
+</robot>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find slider_description)/urdf/common/slider_ros2_macro.xacro" />
+
+    <xacro:macro name="carrier_ros2_controller" params="prefix lower_x upper_x lower_y upper_y">
+
+        <xacro:ros2_control_system name="${prefix}CarrierControl">
+
+            <joint_interfaces>
+                <xacro:prismatic_joint_interface joint_name="${prefix}carrier_x_joint"
+                    lower="${lower_x}" upper="${upper_x}" />
+
+                <xacro:prismatic_joint_interface joint_name="${prefix}carrier_y_joint"
+                    lower="${lower_y}" upper="${upper_y}" />
+
+                <xacro:passive_joint_interface joint_name="${prefix}carrier_z_joint" />
+            </joint_interfaces>
+
+        </xacro:ros2_control_system>
+    </xacro:macro>
+
+</robot>

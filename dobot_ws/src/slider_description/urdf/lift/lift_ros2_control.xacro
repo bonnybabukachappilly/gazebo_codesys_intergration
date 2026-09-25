@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find slider_description)/urdf/common/slider_ros2_macro.xacro" />
+
+    <xacro:macro name="lift_ros2_controller" params="prefix lower_mid upper_mid lower_top upper_top">
+
+        <xacro:ros2_control_system name="${prefix}LiftControl">
+
+            <joint_interfaces>
+                <xacro:prismatic_joint_interface joint_name="${prefix}lift_mid_joint"
+                    lower="${lower_mid}" upper="${upper_mid}" />
+
+                <xacro:prismatic_joint_interface joint_name="${prefix}lift_top_joint"
+                    lower="${lower_top}" upper="${upper_top}" />
+            </joint_interfaces>
+
+        </xacro:ros2_control_system>
+    </xacro:macro>
+
+</robot>
